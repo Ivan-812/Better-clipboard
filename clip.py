@@ -12,17 +12,23 @@ def clip():
     time.sleep(0.1)
     clipboard['recent'] = pyperclip.paste()
     save_json()
-    print_clipboard()
+    # print_clipboard()
 
 
 def get_json(key):
     return clipboard[str(key)]
 
+def save_to_copy(text):
+    pyperclip.copy(text)
+    clipboard['recent'] = text
+    save_json()
+
 def paste_index(index):
     print(index)
     keyboard = Controller()
-    keyboard.release(Key.ctrl)
+    keyboard.release(Key.alt)
     keyboard.type(clipboard[str(index)])
+
 
 def save_to_index(index, content=None):
     if content is None:
