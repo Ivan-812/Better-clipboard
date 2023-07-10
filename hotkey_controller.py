@@ -1,9 +1,8 @@
 from PyQt5.QtCore import QObject, pyqtSignal
 from pynput import keyboard
-import clip
 
 class HotkeyListener(QObject):
-    hotkey_pressed = pyqtSignal(str)
+    send_signal = pyqtSignal(str, int)
 
     def __init__(self):
         super().__init__()
@@ -38,13 +37,11 @@ class HotkeyListener(QObject):
                 print(f'Special key {key} pressed')
 
     def on_copy(self):
-        clip.clip()
-        self.hotkey_pressed.emit('on_copy')
-
+        self.send_signal.emit('on_copy', -1)
 
     def paste_hotkey_onclick(self, i):
         if self.function_active:
-            clip.paste_index(i)
+            self.send_signal.emit('paste_hotkey_onclick', i)
 
     def stop(self):
         self.listener.stop()

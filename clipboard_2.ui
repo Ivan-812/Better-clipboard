@@ -33,10 +33,16 @@
     <string>Clipboard</string>
    </attribute>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <property name="topMargin">
+     <number>5</number>
+    </property>
+    <property name="bottomMargin">
+     <number>5</number>
+    </property>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <layout class="QHBoxLayout" name="recent_layout" stretch="1,3,0,0">
+       <layout class="QHBoxLayout" name="recent_layout" stretch="1,3,0,0,0">
         <property name="leftMargin">
          <number>20</number>
         </property>
@@ -90,6 +96,9 @@
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="clipboard_set_combo"/>
         </item>
         <item>
          <widget class="QRadioButton" name="clipboard_active">
