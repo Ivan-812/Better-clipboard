@@ -26,7 +26,7 @@ class ClipboardManager:
             default_content = {
                 "num_clipboard": 1,
                 "recent_clipboard": 0,
-                "0" : {
+                "0": {
                     "name": "Default",
                     "recent": "",
                     "1": "",
@@ -46,10 +46,9 @@ class ClipboardManager:
 
         # Open the .json file
         self.file = open(json_path, 'r+', encoding='utf-8')
-        # f = open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "clipboard.json"), 'r+', encoding='utf-8')
         self.clipboards = json.load(self.file)
 
-        self.clipboard_index = '0'
+        self.clipboard_index = str(self.get_recent_clipboard())
         self.working_clipboard = self.clipboards[self.clipboard_index]
 
     def clip(self):
@@ -57,6 +56,11 @@ class ClipboardManager:
         self.working_clipboard['recent'] = pyperclip.paste()
         self.save_json()
         # print_clipboard()
+
+    def paste_index(self, index):
+        keyboard = Controller()
+        keyboard.release(Key.alt)
+        keyboard.type(self.working_clipboard[str(index)])
 
     def get_num_of_clipboards(self):
         return self.clipboards['num_of_clipboard']
@@ -94,8 +98,6 @@ class ClipboardManager:
     def change_working_clipboard(self, index):
         if index == -1:
             recent = self.get_recent_clipboard()
-            # TODO: handle recent = last (remove cases)
-            # if recent >= self.get_num_of_clipboards():
             self.clipboard_index = str(recent)
             self.working_clipboard = self.clipboards[self.clipboard_index]
         elif index == -2:
@@ -108,19 +110,13 @@ class ClipboardManager:
             self.clipboards['recent_clipboard'] = index
         self.save_json()
 
-    def get_json(self, key):
+    def get_clipboard_data(self, key):
         return self.working_clipboard[str(key)]
 
     def save_to_copy(self, text):
         pyperclip.copy(text)
         self.working_clipboard['recent'] = text
         self.save_json()
-
-    def paste_index(self, index):
-        print(index)
-        keyboard = Controller()
-        keyboard.release(Key.alt)
-        keyboard.type(self.working_clipboard[str(index)])
 
 
     def save_to_index(self, index, content=None):

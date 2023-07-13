@@ -6,63 +6,309 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>250</width>
-    <height>250</height>
+    <width>312</width>
+    <height>399</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Settings</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QVBoxLayout" name="opacity">
      <item>
-      <widget class="QLabel" name="opacity_text">
-       <property name="text">
-        <string>Opacity</string>
+      <widget class="QGroupBox" name="hotkey_group">
+       <property name="title">
+        <string>Keys Settings</string>
        </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <layout class="QHBoxLayout" name="key_title" stretch="1,0">
+          <item>
+           <widget class="QLabel" name="key_title_text">
+            <property name="text">
+             <string>Quick Paste Shortcut</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="key_reset_button">
+            <property name="text">
+             <string>Reset</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hotkey_1">
+          <item>
+           <widget class="QLabel" name="hotkey_text_1">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QKeySequenceEdit" name="key_seq_1"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="hotkey_button_1">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hotkey_2">
+          <item>
+           <widget class="QLabel" name="hotkey_text_2">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QKeySequenceEdit" name="key_seq_2"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="hotkey_button_2">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hotkey_3">
+          <item>
+           <widget class="QLabel" name="hotkey_text_3">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QKeySequenceEdit" name="key_seq_3"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="hotkey_button_3">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hotkey_4">
+          <item>
+           <widget class="QLabel" name="hotkey_text_4">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QKeySequenceEdit" name="key_seq_4"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="hotkey_button_4">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hotkey_5">
+          <item>
+           <widget class="QLabel" name="hotkey_text_5">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QKeySequenceEdit" name="key_seq_5"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="hotkey_button_5">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hotkey_6">
+          <item>
+           <widget class="QLabel" name="hotkey_text_6">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QKeySequenceEdit" name="key_seq_6"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="hotkey_button_6">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hotkey_7">
+          <item>
+           <widget class="QLabel" name="hotkey_text_7">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QKeySequenceEdit" name="key_seq_7"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="hotkey_button_7">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hotkey_8">
+          <item>
+           <widget class="QLabel" name="hotkey_text_8">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QKeySequenceEdit" name="key_seq_8"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="hotkey_button_8">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hotkey_9">
+          <item>
+           <widget class="QLabel" name="hotkey_text_9">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QKeySequenceEdit" name="key_seq_9"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="hotkey_button_9">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="hotkey_0">
+          <item>
+           <widget class="QLabel" name="hotkey_text_0">
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QKeySequenceEdit" name="key_seq_0"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="hotkey_button_0">
+            <property name="text">
+             <string>PushButton</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </item>
-     <item>
-      <layout class="QHBoxLayout" name="opacity_container" stretch="1,5">
-       <property name="leftMargin">
-        <number>5</number>
-       </property>
-       <property name="topMargin">
-        <number>5</number>
-       </property>
-       <property name="rightMargin">
-        <number>5</number>
-       </property>
-       <property name="bottomMargin">
-        <number>5</number>
-       </property>
-       <item>
-        <widget class="QLineEdit" name="opacity_value">
-         <property name="text">
-          <string>95</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSlider" name="opacity_slider">
-         <property name="minimum">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <number>100</number>
-         </property>
-         <property name="value">
-          <number>95</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="app_group">
+     <property name="title">
+      <string>Apperance Settings</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QLabel" name="opacity_text">
+        <property name="text">
+         <string>Opacity</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="opacity_container" stretch="1,5">
+        <property name="leftMargin">
+         <number>5</number>
+        </property>
+        <property name="topMargin">
+         <number>5</number>
+        </property>
+        <property name="rightMargin">
+         <number>5</number>
+        </property>
+        <property name="bottomMargin">
+         <number>5</number>
+        </property>
+        <item>
+         <widget class="QLineEdit" name="opacity_value">
+          <property name="text">
+           <string>95</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="opacity_slider">
+          <property name="minimum">
+           <number>1</number>
+          </property>
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="value">
+           <number>95</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="QDialogButtonBox" name="button_box">
