@@ -3,7 +3,7 @@ from PyQt5.QtCore import QObject, pyqtSlot
 import sys
 import qdarkstyle
 
-import ui as ui_class
+from user_interface import ui as ui_class
 import settings_controller
 import hotkey_controller
 import clip

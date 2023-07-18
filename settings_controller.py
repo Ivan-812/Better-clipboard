@@ -1,10 +1,10 @@
 import os
 import re
 
-from PyQt5 import QtWidgets, uic, QtGui, QtCore
+from PyQt5 import QtWidgets, QtGui, QtCore
 import configparser
 
-from settings_ui import Ui_settings
+from user_interface.settings_ui import Ui_settings
 
 class SettingsDialog(QtWidgets.QDialog, Ui_settings):
 
@@ -71,7 +71,7 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
             self.opacity_slider.setValue(int(text))
 
     # Config
-    def read_config_file(self, filename='settings.ini'):
+    def read_config_file(self, filename='config/settings.ini'):
         if os.path.exists(filename):
             self.config.read(filename)
         else:
@@ -119,7 +119,7 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
             key_seq = getattr(self, f'key_seq_{i}')
             self.config['HOTKEY_CLIPBOARD'][str(i)] = key_seq.keySequence().toString().lower().replace('ctrl', '<ctrl>').replace('alt', '<alt>').replace('shift', '<shift>').replace('meta', '<super>')
 
-        with open("settings.ini", "w") as configfile:
+        with open("config/settings.ini", "w") as configfile:
             self.config.write(configfile)
         self.setting_updated.emit()
         super().accept()

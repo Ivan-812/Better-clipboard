@@ -18,7 +18,7 @@ class ClipboardManager:
             bundle_dir = os.path.dirname(os.path.abspath(__file__))
 
         # Define the path to the .json file relative to the bundle directory
-        json_path = os.path.join(bundle_dir, "clipboard.json")
+        json_path = os.path.join(bundle_dir, "config/clipboard.json")
 
         # Check if the .json file exists
         if not os.path.exists(json_path):
