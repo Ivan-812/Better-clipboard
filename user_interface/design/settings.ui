@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>312</width>
+    <width>310</width>
     <height>399</height>
    </rect>
   </property>
@@ -262,14 +262,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QLabel" name="opacity_text">
-        <property name="text">
-         <string>Opacity</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QHBoxLayout" name="opacity_container" stretch="1,5">
+       <layout class="QHBoxLayout" name="opacity_container" stretch="1,5,1">
         <property name="leftMargin">
          <number>5</number>
         </property>
@@ -283,9 +276,9 @@
          <number>5</number>
         </property>
         <item>
-         <widget class="QLineEdit" name="opacity_value">
+         <widget class="QLabel" name="opacity_text">
           <property name="text">
-           <string>95</string>
+           <string>Opacity</string>
           </property>
          </widget>
         </item>
@@ -302,6 +295,24 @@
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="opacity_value">
+          <property name="text">
+           <string>95</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="switch_container">
+        <item>
+         <widget class="QCheckBox" name="stay_on_top">
+          <property name="text">
+           <string>Always stay on top</string>
           </property>
          </widget>
         </item>

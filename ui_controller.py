@@ -1,9 +1,10 @@
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QObject, pyqtSlot
+from PyQt5.QtCore import QObject, pyqtSlot, Qt
 import sys
 import qdarkstyle
 
 from user_interface import ui as ui_class
+from tendo import singleton
 import settings_controller
 import hotkey_controller
 import clip
@@ -82,9 +83,15 @@ class UiController(QtWidgets.QTabWidget, QObject):
     def on_settings_updated(self):
         opacity = self.settings_dialog.get_config('opacity')
         hotkey = self.settings_dialog.get_config('hotkey')
+        stay_on_top = self.settings_dialog.get_config('stay_on_top')
 
         self.hotkey_listener.change_hotkeys(hotkey)
         self.setWindowOpacity(0.15 + (int(opacity) - 1) * 0.85/99)
+        if stay_on_top == 'True':
+            self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
+        else:
+            self.setWindowFlags(self.windowFlags() & ~Qt.WindowStaysOnTopHint)
+        self.show()
 
     def button_sets_states(self, i, is_editing, enable=True):
         edit = getattr(self.ui, f'entry_edit_button_{i}')
@@ -163,6 +170,7 @@ class UiController(QtWidgets.QTabWidget, QObject):
 
 if __name__ == '__main__':
     # start()
+    me = singleton.SingleInstance()
     
     app = QtWidgets.QApplication(sys.argv)
     app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())

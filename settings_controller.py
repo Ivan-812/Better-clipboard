@@ -80,7 +80,7 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
                 self.config.write(configfile)
 
     def reset_default_config(self):
-        self.config['APP_SETTINGS'] = {'opacity': '95'}
+        self.config['APP_SETTINGS'] = {'opacity': '95', 'stay_on_top': 'False'}
         self.config['HOTKEY_CLIPBOARD'] = {
             '1': '<alt>+1',
             '2': '<alt>+2',
@@ -102,12 +102,21 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
             return self.config['APP_SETTINGS']['opacity']
         elif name == 'hotkey':
             return self.config['HOTKEY_CLIPBOARD']
+        elif name == 'stay_on_top':
+            return self.config['APP_SETTINGS']['stay_on_top']
         else:
             return None
 
     # UI
     def update_ui(self):
         self.opacity_value.setText(self.config['APP_SETTINGS']['opacity'])
+        self.stay_on_top.setChecked(bool(self.config['APP_SETTINGS']['stay_on_top'] == 'True'))
+
+        if self.config['APP_SETTINGS']['stay_on_top'] == 'True':
+            self.setWindowFlags(self.windowFlags() | QtCore.Qt.WindowStaysOnTopHint)
+        else:
+            self.setWindowFlags(self.windowFlags() & ~QtCore.Qt.WindowStaysOnTopHint)
+
         for i in range(10):
             key_seq = getattr(self, f'key_seq_{i}')
             key_string = self.config['HOTKEY_CLIPBOARD'][str(i)]
@@ -115,6 +124,8 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
 
     def accept(self):
         self.config["APP_SETTINGS"]['opacity'] = self.opacity_value.text()
+        self.config['APP_SETTINGS']['stay_on_top'] = str(self.stay_on_top.isChecked())
+
         for i in range(10):
             key_seq = getattr(self, f'key_seq_{i}')
             self.config['HOTKEY_CLIPBOARD'][str(i)] = key_seq.keySequence().toString().lower().replace('ctrl', '<ctrl>').replace('alt', '<alt>').replace('shift', '<shift>').replace('meta', '<super>')

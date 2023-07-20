@@ -20,11 +20,14 @@ class ClipboardManager:
         # Define the path to the .json file relative to the bundle directory
         json_path = os.path.join(bundle_dir, "config/clipboard.json")
 
+        if not os.path.exists(os.path.join(bundle_dir,'config')):
+            os.makedirs(os.path.join(bundle_dir, 'config'))
+
         # Check if the .json file exists
         if not os.path.exists(json_path):
             # If not, create an empty .json file
             default_content = {
-                "num_clipboard": 1,
+                "num_of_clipboard": 1,
                 "recent_clipboard": 0,
                 "0": {
                     "name": "Default",
