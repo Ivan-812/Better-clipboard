@@ -8,6 +8,12 @@ from user_interface.settings_ui import Ui_settings
 
 class SettingsDialog(QtWidgets.QDialog, Ui_settings):
 
+    # For adding new settings, change below:
+    # 1. reset_default_config
+    # 2. get_config
+    # 3. update_ui
+    # 4. accept
+
     setting_updated = QtCore.pyqtSignal()
 
     def __init__(self, *args, **kwargs):
@@ -80,7 +86,7 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
                 self.config.write(configfile)
 
     def reset_default_config(self):
-        self.config['APP_SETTINGS'] = {'opacity': '95', 'stay_on_top': 'False'}
+        self.config['APP_SETTINGS'] = {'opacity': '95', 'stay_on_top': 'False', 'delete_extra_key': 'False'}
         self.config['HOTKEY_CLIPBOARD'] = {
             '1': '<alt>+1',
             '2': '<alt>+2',
@@ -104,6 +110,8 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
             return self.config['HOTKEY_CLIPBOARD']
         elif name == 'stay_on_top':
             return self.config['APP_SETTINGS']['stay_on_top']
+        elif name == 'delete_extra_key':
+            return self.config['APP_SETTINGS']['delete_extra_key']
         else:
             return None
 
@@ -111,6 +119,7 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
     def update_ui(self):
         self.opacity_value.setText(self.config['APP_SETTINGS']['opacity'])
         self.stay_on_top.setChecked(bool(self.config['APP_SETTINGS']['stay_on_top'] == 'True'))
+        self.delete_extra_key.setChecked(bool(self.config['APP_SETTINGS']['delete_extra_key'] == 'True'))
 
         if self.config['APP_SETTINGS']['stay_on_top'] == 'True':
             self.setWindowFlags(self.windowFlags() | QtCore.Qt.WindowStaysOnTopHint)
@@ -125,6 +134,7 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
     def accept(self):
         self.config["APP_SETTINGS"]['opacity'] = self.opacity_value.text()
         self.config['APP_SETTINGS']['stay_on_top'] = str(self.stay_on_top.isChecked())
+        self.config['APP_SETTINGS']['delete_extra_key'] = str(self.delete_extra_key.isChecked())
 
         for i in range(10):
             key_seq = getattr(self, f'key_seq_{i}')

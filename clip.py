@@ -60,9 +60,14 @@ class ClipboardManager:
         self.save_json()
         # print_clipboard()
 
-    def paste_index(self, index):
+    def paste_index(self, index, extra_key=False):
         keyboard = Controller()
         keyboard.release(Key.alt)
+        print(extra_key)
+        if extra_key:
+            keyboard.press(Key.backspace)
+            keyboard.release(Key.backspace)
+            print('pressed backspace')
         keyboard.type(self.working_clipboard[str(index)])
 
     def get_num_of_clipboards(self):

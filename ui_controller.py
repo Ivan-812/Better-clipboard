@@ -21,6 +21,8 @@ class UiController(QtWidgets.QTabWidget, QObject):
         self.hotkey_listener = hotkey_controller.HotkeyListener()
         self.hotkey_listener.send_signal.connect(self.on_hotkey_signal)
 
+        self.delete_extra_key = False
+
         self.init_ui_elements()
         self.update_ui()
 
@@ -83,15 +85,19 @@ class UiController(QtWidgets.QTabWidget, QObject):
     def on_settings_updated(self):
         opacity = self.settings_dialog.get_config('opacity')
         hotkey = self.settings_dialog.get_config('hotkey')
-        stay_on_top = self.settings_dialog.get_config('stay_on_top')
+        stay_on_top = bool(self.settings_dialog.get_config('stay_on_top') == 'True')
+        self.delete_extra_key = bool(self.settings_dialog.get_config('delete_extra_key') == 'True')
+
 
         self.hotkey_listener.change_hotkeys(hotkey)
         self.setWindowOpacity(0.15 + (int(opacity) - 1) * 0.85/99)
-        if stay_on_top == 'True':
+        if stay_on_top:
             self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
         else:
             self.setWindowFlags(self.windowFlags() & ~Qt.WindowStaysOnTopHint)
         self.show()
+        self.hotkey_listener.send_signal.disconnect(self.on_hotkey_signal)
+        self.hotkey_listener.send_signal.connect(self.on_hotkey_signal)
 
     def button_sets_states(self, i, is_editing, enable=True):
         edit = getattr(self.ui, f'entry_edit_button_{i}')
@@ -165,7 +171,7 @@ class UiController(QtWidgets.QTabWidget, QObject):
             self.clipboard_manager.clip()
             self.update_ui()
         elif function == 'paste_hotkey_onclick':
-            self.clipboard_manager.paste_index(i)
+            self.clipboard_manager.paste_index(i, self.delete_extra_key)
 
 
 if __name__ == '__main__':

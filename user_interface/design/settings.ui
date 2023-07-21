@@ -316,6 +316,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QCheckBox" name="delete_extra_key">
+          <property name="text">
+           <string>Delete extra key when paste</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
      </layout>

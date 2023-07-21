@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'settings.ui'
+# Form implementation generated from reading ui file 'design/settings.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -184,6 +184,9 @@ class Ui_settings(object):
         self.stay_on_top = QtWidgets.QCheckBox(self.app_group)
         self.stay_on_top.setObjectName("stay_on_top")
         self.switch_container.addWidget(self.stay_on_top)
+        self.delete_extra_key = QtWidgets.QCheckBox(self.app_group)
+        self.delete_extra_key.setObjectName("delete_extra_key")
+        self.switch_container.addWidget(self.delete_extra_key)
         self.verticalLayout_3.addLayout(self.switch_container)
         self.verticalLayout.addWidget(self.app_group)
         self.button_box = QtWidgets.QDialogButtonBox(settings)
@@ -227,6 +230,7 @@ class Ui_settings(object):
         self.opacity_text.setText(_translate("settings", "Opacity"))
         self.opacity_value.setText(_translate("settings", "95"))
         self.stay_on_top.setText(_translate("settings", "Always stay on top"))
+        self.delete_extra_key.setText(_translate("settings", "Delete extra key when paste"))
 
 
 if __name__ == "__main__":
