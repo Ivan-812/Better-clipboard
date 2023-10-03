@@ -1,13 +1,14 @@
-var data = {{ data | tojson | safe }};
-
 // Now you can use 'data' as a JavaScript object
 console.log(data);
+
+document.getElementById('output-path').value = data['outputPath']
+document.getElementById('format').value = data.format
 
 function submitForm() {
   const data = {
     url: document.getElementById('url').value,
     path: document.getElementById('output-path').value,
-    isVideo: document.getElementById('format').value
+    format: document.getElementById('format').value
   };
 
   fetch('/download', {
