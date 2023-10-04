@@ -16,8 +16,8 @@ def download(urls, ydl_opts={}):
 
 
 def video(urls, opts={}):
-    format = 'bestvideo[height<=360]+bestaudio/best'
-    # format = 'bestvideo+bestaudio'
+    # format = 'bestvideo[height<=360]+bestaudio/best'
+    format = 'bestvideo+bestaudio'
     preferedformat = 'mp4' # one of avi, flv, mkv, mp4, ogg, webm
     video_opts = {
         'format': format,
@@ -39,6 +39,37 @@ def audio(urls, opts={}):
     }
     opts.update(audio_opts)
     download(urls, opts)
+
+def json_download(req):
+    url = req['url']
+    opts = {}
+
+    # Filename
+    if req['customFilenameSwitch']:
+        opts.update({'outtmpl': req['outputPath'] + '/' + req['customFilename']})
+    else:
+        opts.update({'outtmpl': req['outputPath'] + '/%(title)s-%(id)s.%(ext)s'})
+
+    # Format
+    if req['format'] == 'mp4':
+        opts.update({
+            'format': 'bestvideo+bestaudio',
+            'postprocessors': [{
+                'key': 'FFmpegVideoConvertor',
+                'preferedformat': 'mp4',
+            }]
+        })
+    else:
+        opts.update({
+            'format': 'bestaudio/best',
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3'
+            }]
+        })
+
+
+    download(url, opts)
 
 
 if __name__ == '__main__':

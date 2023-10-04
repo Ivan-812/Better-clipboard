@@ -17,23 +17,11 @@ def example():
 @app.route('/download', methods=['POST'])
 def download():
     req = request.json
-    print(req)
-
-    with open('config/config.json', 'r') as f:
-        data = json.load(f)
-
-    # Edit the data
-    data['outputPath'] = req['path']
-    data['format'] = req['format']
 
     with open('config/config.json', 'w') as f:
-        json.dump(data, f)
+        json.dump(req, f)
 
-    opts = {'outtmpl': req['path'] + '/%(title)s-%(id)s.%(ext)s'}
-    if req['format'] == 'mp4':
-        yt.download(req['url'], opts)
-    else:
-        yt.audio(req['url'], opts)
+    yt.json_download(req)
     return 'POST /download completed'
 
 
