@@ -86,7 +86,7 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
                 self.config.write(configfile)
 
     def reset_default_config(self):
-        self.config['APP_SETTINGS'] = {'opacity': '95', 'stay_on_top': 'False', 'delete_extra_key': 'False'}
+        self.config['APP_SETTINGS'] = {'opacity': '95', 'stay_on_top': 'False', 'delete_extra_key': 'False', 'toggle_frame': 'True'}
         self.config['HOTKEY_CLIPBOARD'] = {
             '1': '<alt>+1',
             '2': '<alt>+2',
@@ -112,6 +112,8 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
             return self.config['APP_SETTINGS']['stay_on_top']
         elif name == 'delete_extra_key':
             return self.config['APP_SETTINGS']['delete_extra_key']
+        elif name == 'toggle_frame':
+            return self.config['APP_SETTINGS']['toggle_frame']
         else:
             return None
 
@@ -120,6 +122,7 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
         self.opacity_value.setText(self.config['APP_SETTINGS']['opacity'])
         self.stay_on_top.setChecked(bool(self.config['APP_SETTINGS']['stay_on_top'] == 'True'))
         self.delete_extra_key.setChecked(bool(self.config['APP_SETTINGS']['delete_extra_key'] == 'True'))
+        self.toggle_frame.setChecked(bool(self.config['APP_SETTINGS']['toggle_frame'] == 'True'))
 
         if self.config['APP_SETTINGS']['stay_on_top'] == 'True':
             self.setWindowFlags(self.windowFlags() | QtCore.Qt.WindowStaysOnTopHint)
@@ -135,6 +138,7 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
         self.config["APP_SETTINGS"]['opacity'] = self.opacity_value.text()
         self.config['APP_SETTINGS']['stay_on_top'] = str(self.stay_on_top.isChecked())
         self.config['APP_SETTINGS']['delete_extra_key'] = str(self.delete_extra_key.isChecked())
+        self.config['APP_SETTINGS']['toggle_frame'] = str(self.toggle_frame.isChecked())
 
         for i in range(10):
             key_seq = getattr(self, f'key_seq_{i}')

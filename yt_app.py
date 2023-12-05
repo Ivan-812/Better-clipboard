@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, jsonify
+import time
+
+from flask import Flask, render_template, request, jsonify, Response
 import webbrowser
 import subprocess
 from threading import Timer
@@ -23,6 +25,17 @@ def download():
 
     yt.json_download(req)
     return 'POST /download completed'
+
+@app.route('/stream')
+def stream():
+    def event_stream():
+        current_log_length = 0
+        while True:
+            while len(yt.logs) > current_log_length:
+                yield 'data: %s\n\n' % yt.logs[current_log_length]
+                current_log_length += 1
+            time.sleep(1)
+    return Response(event_stream(), mimetype="text/event-stream")
 
 
 def open_browser():

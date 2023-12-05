@@ -1,11 +1,13 @@
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import QObject, pyqtSlot, Qt
+from PyQt5.QtCore import QObject, pyqtSlot, Qt, QSettings, QByteArray
 import sys
 import qdarkstyle
 
 from user_interface import ui as ui_class
+from module.open_batch import Process
 from tendo import singleton
 import settings_controller
+import home_settings_controller
 import hotkey_controller
 import clip
 
@@ -13,6 +15,10 @@ class UiController(QtWidgets.QTabWidget, QObject):
     def __init__(self):
 	    # in python3, super(Class, self).xxx = super().xxx
         super().__init__()
+        self.settings = QSettings("Company", "App")
+
+        # self.restoreState(self.settings.value("windowState", QByteArray()))
+
         self.ui = ui_class.Ui_BetterClipboard()
         self.ui.setupUi(self)
         self.clipboard_manager = clip.ClipboardManager()
@@ -23,11 +29,18 @@ class UiController(QtWidgets.QTabWidget, QObject):
 
         self.delete_extra_key = False
 
-        self.init_ui_elements()
+        # Home Settings
+        self.home_settings_popup = home_settings_controller.HomeSettingsDialog()
+        self.home_settings_popup.home_settings_update.connect(self.home_ui_init)
+
+        self.restoreGeometry(self.settings.value("geometry", ""))
+
+        self.clipboard_ui_init()
+        self.home_ui_init(update=False)
         self.update_ui()
 
 
-    def init_ui_elements(self):
+    def clipboard_ui_init(self):
 
         self.clipboard_manager.clip()
         self.ui.current_value.setText(self.clipboard_manager.get_clipboard_data('recent'))
@@ -86,6 +99,7 @@ class UiController(QtWidgets.QTabWidget, QObject):
         opacity = self.settings_dialog.get_config('opacity')
         hotkey = self.settings_dialog.get_config('hotkey')
         stay_on_top = bool(self.settings_dialog.get_config('stay_on_top') == 'True')
+        toggle_frame = bool(self.settings_dialog.get_config('toggle_frame') == 'True')
         self.delete_extra_key = bool(self.settings_dialog.get_config('delete_extra_key') == 'True')
 
 
@@ -95,6 +109,10 @@ class UiController(QtWidgets.QTabWidget, QObject):
             self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
         else:
             self.setWindowFlags(self.windowFlags() & ~Qt.WindowStaysOnTopHint)
+        if not toggle_frame:
+            self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
+        else:
+            self.setWindowFlags(self.windowFlags() & ~Qt.FramelessWindowHint)
         self.show()
         self.hotkey_listener.send_signal.disconnect(self.on_hotkey_signal)
         self.hotkey_listener.send_signal.connect(self.on_hotkey_signal)
@@ -172,6 +190,56 @@ class UiController(QtWidgets.QTabWidget, QObject):
             self.update_ui()
         elif function == 'paste_hotkey_onclick':
             self.clipboard_manager.paste_index(i, self.delete_extra_key)
+
+    def closeEvent(self, event):
+        self.settings.setValue("geometry", self.saveGeometry())
+        # self.settings.setValue("windowState", self.saveState())
+        super().closeEvent(event)
+
+    # ============= Home Page =================
+    def home_ui_init(self, update=True):
+
+        for i in range(8):
+            button_name = f'home_button_{i + 1}'
+            button = getattr(self.ui, button_name)
+
+            if self.settings.contains(f"home_button_{i + 1}_title"):
+                button.setText(self.settings.value(f"home_button_{i + 1}_title", 'Hello World'))
+                button.setEnabled(True)
+            else:
+                button.setText('')
+                button.setEnabled(False)
+
+            # if i < count:
+            #     button.setText(self.settings.value(f"home_button_{i + 1}_title", 'Hello World'))
+            # elif i == count:
+            #     button.setText('Add new')
+            # else:
+            #     button.setText('')
+            #     button.setEnabled(False)
+
+            button.setStyleSheet("QTextEdit:enabled { background-color: #3E5771 }")
+            if not update:
+                button.clicked.connect(lambda check, i=i+1: self.home_button_onclick(i))
+
+        button_name = 'home_button_9'
+        button = getattr(self.ui, button_name)
+        button.setText('Edit/Delete')
+        if not update:
+            button.clicked.connect(lambda check: self.home_button_onclick(9))
+
+    def home_button_onclick(self, i):
+        if i == 9:
+            self.home_settings_popup.exec_()
+        elif self.settings.contains(f"home_button_{i}_content"):
+            p = Process(self.settings.value(f"home_button_{i}_content"))
+
+            # home_settings_popup = home_settings_controller.HomeSettingsDialog('edit')
+            # home_settings_popup.home_settings_update.connect(self.home_ui_init)
+            # home_settings_popup.exec_()
+            # self.settings.setValue(f'home_button_{i}_title', 'some function title')
+            # self.settings.setValue(f'home_button_{i}_content', 'sample.bat')
+            # self.settings.setValue('home_button_count', count+1)
 
 
 if __name__ == '__main__':

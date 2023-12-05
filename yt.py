@@ -1,6 +1,22 @@
 import json
 import yt_dlp
+import logging
 
+logs = []
+
+class MyLogger(logging.Logger):
+    def debug(self, msg):
+        logs.append(msg)
+
+    def warning(self, msg):
+        logs.append(msg)
+
+    def error(self, msg):
+        logs.append(msg)
+
+def my_hook(d):
+    if d['status'] == 'finished':
+        logs.append('Done downloading, now converting ...')
 
 def get_video_info(urls, ydl_opts={}):
     for url in urls:
@@ -42,7 +58,10 @@ def audio(urls, opts={}):
 
 def json_download(req):
     url = req['url']
-    opts = {}
+    opts = {
+        'logger': MyLogger('yt-dlp'),
+        'progress_hooks': [my_hook],
+    }
 
     # Filename
     if req['customFilenameSwitch']:

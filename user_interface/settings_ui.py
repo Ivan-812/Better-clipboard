@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'design/settings.ui'
+# Form implementation generated from reading ui file '.\user_interface\design\settings.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_settings(object):
     def setupUi(self, settings):
         settings.setObjectName("settings")
-        settings.resize(310, 399)
+        settings.resize(310, 405)
         self.verticalLayout = QtWidgets.QVBoxLayout(settings)
         self.verticalLayout.setObjectName("verticalLayout")
         self.opacity = QtWidgets.QVBoxLayout()
@@ -187,6 +187,9 @@ class Ui_settings(object):
         self.delete_extra_key = QtWidgets.QCheckBox(self.app_group)
         self.delete_extra_key.setObjectName("delete_extra_key")
         self.switch_container.addWidget(self.delete_extra_key)
+        self.toggle_frame = QtWidgets.QCheckBox(self.app_group)
+        self.toggle_frame.setObjectName("toggle_frame")
+        self.switch_container.addWidget(self.toggle_frame)
         self.verticalLayout_3.addLayout(self.switch_container)
         self.verticalLayout.addWidget(self.app_group)
         self.button_box = QtWidgets.QDialogButtonBox(settings)
@@ -231,6 +234,7 @@ class Ui_settings(object):
         self.opacity_value.setText(_translate("settings", "95"))
         self.stay_on_top.setText(_translate("settings", "Always stay on top"))
         self.delete_extra_key.setText(_translate("settings", "Delete extra key when paste"))
+        self.toggle_frame.setText(_translate("settings", "Toggle frame"))
 
 
 if __name__ == "__main__":

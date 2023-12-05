@@ -40,3 +40,12 @@ function submitForm() {
     body: JSON.stringify(innerData)
   });
 }
+
+// ----- Log handling -----
+var source = new EventSource("/stream");
+source.onmessage = function(event) {
+    var li = document.createElement("li");
+    li.classList.add("list-group-item");
+    li.textContent = event.data;
+    document.getElementById("logs").appendChild(li);
+}
