@@ -1,5 +1,6 @@
 import subprocess
 import time
+import os
 
 
 class Process:
@@ -9,7 +10,8 @@ class Process:
 
     def open_batch(self, filename):
         if not self.pid:
-            proc = subprocess.Popen(['start', filename], shell=True)
+            dir_name = os.path.dirname(filename)
+            proc = subprocess.Popen(['start', 'cmd', '/c', filename], shell=True, cwd=dir_name)
             self.pid = proc.pid
 
     def terminate_batch(self):
@@ -22,7 +24,8 @@ class Process:
 
 
 if __name__ == '__main__':
-    p = Process('C:/Users/02005048/Desktop/sample.bat')
+    # p = Process('C:/Users/02005048/Desktop/sample.bat')
+    p = Process('C:/Users/02005048/Documents/Ivan/pyqt/Clipboard Tools/sample.bat')
     # p = Process('sample.bat')
     time.sleep(3)
     p.terminate_batch()
