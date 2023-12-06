@@ -198,7 +198,6 @@ class UiController(QtWidgets.QTabWidget, QObject):
 
     # ============= Home Page =================
     def home_ui_init(self, update=True):
-
         for i in range(8):
             button_name = f'home_button_{i + 1}'
             button = getattr(self.ui, button_name)
@@ -210,14 +209,6 @@ class UiController(QtWidgets.QTabWidget, QObject):
                 button.setText('')
                 button.setEnabled(False)
 
-            # if i < count:
-            #     button.setText(self.settings.value(f"home_button_{i + 1}_title", 'Hello World'))
-            # elif i == count:
-            #     button.setText('Add new')
-            # else:
-            #     button.setText('')
-            #     button.setEnabled(False)
-
             button.setStyleSheet("QTextEdit:enabled { background-color: #3E5771 }")
             if not update:
                 button.clicked.connect(lambda check, i=i+1: self.home_button_onclick(i))
@@ -226,20 +217,20 @@ class UiController(QtWidgets.QTabWidget, QObject):
         button = getattr(self.ui, button_name)
         button.setText('Edit/Delete')
         if not update:
-            button.clicked.connect(lambda check: self.home_button_onclick(9))
+            button.clicked.connect(lambda check: self.home_button_onclick(-1))
 
     def home_button_onclick(self, i):
-        if i == 9:
+        if i == -1:
             self.home_settings_popup.exec_()
         elif self.settings.contains(f"home_button_{i}_content"):
-            p = Process(self.settings.value(f"home_button_{i}_content"))
-
-            # home_settings_popup = home_settings_controller.HomeSettingsDialog('edit')
-            # home_settings_popup.home_settings_update.connect(self.home_ui_init)
-            # home_settings_popup.exec_()
-            # self.settings.setValue(f'home_button_{i}_title', 'some function title')
-            # self.settings.setValue(f'home_button_{i}_content', 'sample.bat')
-            # self.settings.setValue('home_button_count', count+1)
+            try:
+                content = self.settings.value(f"home_button_{i}_content")
+                if content[:5] == 'm=cmd':
+                    p = Process(content[5:], mode='cmd')
+                else:
+                    p = Process(content)
+            except:
+                pass
 
 
 if __name__ == '__main__':

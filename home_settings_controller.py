@@ -30,12 +30,16 @@ class HomeSettingsDialog(QtWidgets.QDialog, Ui_home_button_settings):
     def accept(self):
         title = getattr(self, 'title_text')
         content = getattr(self, 'content_text')
+        type_choice = getattr(self, 'type_choice').currentText()
         edit = True if getattr(self, 'edit_radio').isChecked() else False
         index = getattr(self, 'option_choice').currentText()
 
         if edit:
             self.settings.setValue(f'home_button_{index}_title', title.toPlainText())
-            self.settings.setValue(f'home_button_{index}_content', content.toPlainText())
+            if type_choice == 'Command':
+                self.settings.setValue(f'home_button_{index}_content', 'm=cmd' + content.toPlainText())
+            else:
+                self.settings.setValue(f'home_button_{index}_content', content.toPlainText())
         else:
             self.settings.remove(f'home_button_{index}_title')
             self.settings.remove(f'home_button_{index}_content')

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file './user_interface/design/home_settings.ui'
+# Form implementation generated from reading ui file 'user_interface/design/home_settings.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,8 +14,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_home_button_settings(object):
     def setupUi(self, home_button_settings):
         home_button_settings.setObjectName("home_button_settings")
-        home_button_settings.resize(330, 330)
-        home_button_settings.setMinimumSize(QtCore.QSize(330, 330))
+        home_button_settings.resize(330, 450)
+        home_button_settings.setMinimumSize(QtCore.QSize(330, 450))
         home_button_settings.setMaximumSize(QtCore.QSize(99999, 99999))
         self.verticalLayout = QtWidgets.QVBoxLayout(home_button_settings)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -33,7 +33,7 @@ class Ui_home_button_settings(object):
         self.verticalLayout_2.addWidget(self.title_label)
         self.title_text = QtWidgets.QTextEdit(self.edit_group)
         self.title_text.setMinimumSize(QtCore.QSize(0, 20))
-        self.title_text.setMaximumSize(QtCore.QSize(16777215, 25))
+        self.title_text.setMaximumSize(QtCore.QSize(16777215, 99999))
         font = QtGui.QFont()
         font.setPointSize(8)
         self.title_text.setFont(font)
@@ -48,7 +48,8 @@ class Ui_home_button_settings(object):
         self.content_label.setObjectName("content_label")
         self.verticalLayout_2.addWidget(self.content_label)
         self.content_text = QtWidgets.QTextEdit(self.edit_group)
-        self.content_text.setMaximumSize(QtCore.QSize(16777215, 25))
+        self.content_text.setMinimumSize(QtCore.QSize(0, 20))
+        self.content_text.setMaximumSize(QtCore.QSize(16777215, 99999))
         font = QtGui.QFont()
         font.setPointSize(8)
         self.content_text.setFont(font)
@@ -66,6 +67,8 @@ class Ui_home_button_settings(object):
         self.type_choice = QtWidgets.QComboBox(self.edit_group)
         self.type_choice.setMaximumSize(QtCore.QSize(100, 16777215))
         self.type_choice.setObjectName("type_choice")
+        self.type_choice.addItem("")
+        self.type_choice.addItem("")
         self.type_layout.addWidget(self.type_choice)
         self.verticalLayout_2.addLayout(self.type_layout)
         self.verticalLayout.addWidget(self.edit_group)
@@ -106,6 +109,8 @@ class Ui_home_button_settings(object):
         self.title_label.setText(_translate("home_button_settings", "Display name"))
         self.content_label.setText(_translate("home_button_settings", "Content"))
         self.type_label.setText(_translate("home_button_settings", "Type"))
+        self.type_choice.setItemText(0, _translate("home_button_settings", "Batch"))
+        self.type_choice.setItemText(1, _translate("home_button_settings", "Command"))
         self.option_group.setTitle(_translate("home_button_settings", "Edit Action"))
         self.edit_radio.setText(_translate("home_button_settings", "Edit"))
         self.delete_radio.setText(_translate("home_button_settings", "Delete"))
