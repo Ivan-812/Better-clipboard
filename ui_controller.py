@@ -198,7 +198,7 @@ class UiController(QtWidgets.QTabWidget, QObject):
 
     # ============= Home Page =================
     def home_ui_init(self, update=True):
-        for i in range(8):
+        for i in range(14):
             button_name = f'home_button_{i + 1}'
             button = getattr(self.ui, button_name)
 
@@ -210,10 +210,14 @@ class UiController(QtWidgets.QTabWidget, QObject):
                 button.setEnabled(False)
 
             button.setStyleSheet("QTextEdit:enabled { background-color: #3E5771 }")
+            if self.settings.contains(f'home_button_{i+1}_color'):
+                button.setStyleSheet(self.settings.value(f'home_button_{i+1}_color'))
+
+
             if not update:
                 button.clicked.connect(lambda check, i=i+1: self.home_button_onclick(i))
 
-        button_name = 'home_button_9'
+        button_name = 'home_button_15'
         button = getattr(self.ui, button_name)
         button.setText('Edit/Delete')
         if not update:
@@ -227,6 +231,8 @@ class UiController(QtWidgets.QTabWidget, QObject):
                 content = self.settings.value(f"home_button_{i}_content")
                 if content[:5] == 'm=cmd':
                     p = Process(content[5:], mode='cmd')
+                elif content[:5] == 'm=fdr':
+                    p = Process(content[5:], mode='folder')
                 else:
                     p = Process(content)
             except:

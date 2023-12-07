@@ -157,9 +157,21 @@
           </item>
           <item>
            <property name="text">
+            <string>Folder</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
             <string>Command</string>
            </property>
           </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="color_button">
+          <property name="text">
+           <string>Color</string>
+          </property>
          </widget>
         </item>
        </layout>

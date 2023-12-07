@@ -6,8 +6,18 @@ import os
 class Process:
     def __init__(self, string, mode='batch'):
         self.pid = None
-        self.open_batch(string, mode)
+        if mode == 'folder':
+            self.open_explorer(string)
+        else:
+            self.open_batch(string, mode)
 
+    def open_explorer(self, path):
+        # Check if the path exists
+        if os.path.exists(path):
+            # Open the file explorer
+            subprocess.run(['explorer', os.path.realpath(path)])
+        else:
+            print(f"The path {path} does not exist.")
 
     def open_batch(self, filename, mode='batch'):
         if not self.pid:
