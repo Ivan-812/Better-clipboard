@@ -213,15 +213,18 @@ class UiController(QtWidgets.QTabWidget, QObject):
             if self.settings.contains(f'home_button_{i+1}_color'):
                 button.setStyleSheet(self.settings.value(f'home_button_{i+1}_color'))
 
-
             if not update:
                 button.clicked.connect(lambda check, i=i+1: self.home_button_onclick(i))
 
-        button_name = 'home_button_15'
-        button = getattr(self.ui, button_name)
-        button.setText('Edit/Delete')
+        edit_button_name = 'home_button_edit'
+        edit_button = getattr(self.ui, edit_button_name)
+        edit_button.setText('Edit/Delete')
+        settings_button = getattr(self.ui, 'home_button_settings')
+        settings_button.setText('\u2699')
+        getattr(self.ui, 'home_button_function').clicked.connect(self.showMinimized)
         if not update:
-            button.clicked.connect(lambda check: self.home_button_onclick(-1))
+            edit_button.clicked.connect(lambda check: self.home_button_onclick(-1))
+            settings_button.clicked.connect(self.open_settings)
 
     def home_button_onclick(self, i):
         if i == -1:
@@ -229,12 +232,21 @@ class UiController(QtWidgets.QTabWidget, QObject):
         elif self.settings.contains(f"home_button_{i}_content"):
             try:
                 content = self.settings.value(f"home_button_{i}_content")
+                mode = 'batch'
                 if content[:5] == 'm=cmd':
-                    p = Process(content[5:], mode='cmd')
+                    mode = 'cmd'
+                    content = content[5:]
                 elif content[:5] == 'm=fdr':
-                    p = Process(content[5:], mode='folder')
+                    mode = 'folder'
+                    content = content[5:]
+
+                if self.settings.value(f'home_button_{i}_popup') == 'false':
+                    is_popup = False
                 else:
-                    p = Process(content)
+                    is_popup = True
+
+                p = Process(content, mode=mode, popup=is_popup)
+
             except:
                 pass
 

@@ -123,25 +123,7 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="type_layout">
-        <item>
-         <widget class="QLabel" name="type_label">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>8</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>Type</string>
-          </property>
-         </widget>
-        </item>
+       <layout class="QHBoxLayout" name="type_layout" stretch="3,2,2">
         <item>
          <widget class="QComboBox" name="type_choice">
           <property name="maximumSize">
@@ -165,6 +147,13 @@
             <string>Command</string>
            </property>
           </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="popup_checkbox">
+          <property name="text">
+           <string>PopUp</string>
+          </property>
          </widget>
         </item>
         <item>

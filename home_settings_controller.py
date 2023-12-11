@@ -7,7 +7,14 @@ import configparser
 
 from user_interface.home_settings_ui import Ui_home_button_settings
 
-
+BUTTON_DEFAULT_STYLESHEET = """
+                    QPushButton {
+                        background-color: #455364;
+                    }
+                    QPushButton:hover {
+                        background-color: #536478;
+                    }
+                """
 
 class HomeSettingsDialog(QtWidgets.QDialog, Ui_home_button_settings):
     home_settings_update = QtCore.pyqtSignal()
@@ -63,25 +70,31 @@ class HomeSettingsDialog(QtWidgets.QDialog, Ui_home_button_settings):
             else:
                 self.type_choice.setCurrentIndex(0)
                 self.content_text.setText(self.settings.value(f'home_button_{choice}_content'))
+            # set Checkbox
+            getattr(self, 'popup_checkbox').setChecked(self.settings.value(f'home_button_{choice}_popup') == 'true')
             # set Color
             if self.settings.contains(f'home_button_{choice}_color'):
                 getattr(self, 'color_button').setStyleSheet(self.settings.value(f'home_button_{choice}_color'))
             else:
-                getattr(self, 'color_button').setStyleSheet("QTextEdit:enabled { background-color: #3E5771 }")
+                getattr(self, 'color_button').setStyleSheet(BUTTON_DEFAULT_STYLESHEET)
         else:
             self.title_text.setText("")
             self.content_text.setText("")
+            getattr(self, 'popup_checkbox').setChecked(False)
+            getattr(self, 'color_button').setStyleSheet(BUTTON_DEFAULT_STYLESHEET)
 
     def accept(self):
         title = getattr(self, 'title_text')
         content = getattr(self, 'content_text')
         type_choice = getattr(self, 'type_choice').currentText()
+        is_popup = getattr(self, 'popup_checkbox').isChecked()
         color = getattr(self, 'color_button').styleSheet()
-        edit = True if getattr(self, 'edit_radio').isChecked() else False
+        edit = getattr(self, 'edit_radio').isChecked()
         index = getattr(self, 'option_choice').currentText()
 
         if edit:
             self.settings.setValue(f'home_button_{index}_title', title.toPlainText())
+            self.settings.setValue(f'home_button_{index}_popup', is_popup)
             self.settings.setValue(f'home_button_{index}_color', color)
             if type_choice == 'Command':
                 self.settings.setValue(f'home_button_{index}_content', 'm=cmd' + content.toPlainText())
@@ -92,6 +105,9 @@ class HomeSettingsDialog(QtWidgets.QDialog, Ui_home_button_settings):
         else:
             self.settings.remove(f'home_button_{index}_title')
             self.settings.remove(f'home_button_{index}_content')
+            self.settings.remove(f'home_button_{index}_color')
+            self.settings.remove(f'home_button_{index}_popup')
+            getattr(self, 'edit_radio').setChecked(True)
 
         self.home_settings_update.emit()
         super().accept()
