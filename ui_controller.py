@@ -31,7 +31,8 @@ class UiController(QtWidgets.QTabWidget, QObject):
 
         # Home Settings
         self.home_settings_popup = home_settings_controller.HomeSettingsDialog()
-        self.home_settings_popup.home_settings_update.connect(self.home_ui_init)
+        self.home_settings_popup.home_settings_terminate.connect(self.toggle_index_guide)
+        self.home_settings_popup.home_settings_update.connect(self.on_home_settings_update)
 
         self.restoreGeometry(self.settings.value("geometry", ""))
 
@@ -198,6 +199,7 @@ class UiController(QtWidgets.QTabWidget, QObject):
 
     # ============= Home Page =================
     def home_ui_init(self, update=True):
+        self.toggle_index_guide(False)
         for i in range(14):
             button_name = f'home_button_{i + 1}'
             button = getattr(self.ui, button_name)
@@ -228,6 +230,7 @@ class UiController(QtWidgets.QTabWidget, QObject):
 
     def home_button_onclick(self, i):
         if i == -1:
+            self.toggle_index_guide(True)
             self.home_settings_popup.exec_()
         elif self.settings.contains(f"home_button_{i}_content"):
             try:
@@ -249,6 +252,14 @@ class UiController(QtWidgets.QTabWidget, QObject):
 
             except:
                 pass
+
+    def on_home_settings_update(self):
+        self.home_ui_init()
+        self.toggle_index_guide(False)
+
+    def toggle_index_guide(self, active=False):
+        for i in range(12):
+            getattr(self.ui, f'index_label_{i+1}').setHidden(not active)
 
 
 if __name__ == '__main__':

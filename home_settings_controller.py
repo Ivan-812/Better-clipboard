@@ -17,6 +17,7 @@ BUTTON_DEFAULT_STYLESHEET = """
                 """
 
 class HomeSettingsDialog(QtWidgets.QDialog, Ui_home_button_settings):
+    home_settings_terminate = QtCore.pyqtSignal()
     home_settings_update = QtCore.pyqtSignal()
 
     def __init__(self, *args, **kwargs):
@@ -113,5 +114,5 @@ class HomeSettingsDialog(QtWidgets.QDialog, Ui_home_button_settings):
         super().accept()
 
     def reject(self):
-
+        self.home_settings_terminate.emit()
         super().reject()
