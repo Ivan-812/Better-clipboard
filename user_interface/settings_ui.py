@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\user_interface\design\settings.ui'
+# Form implementation generated from reading ui file 'user_interface/design/settings.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.9
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_settings(object):
     def setupUi(self, settings):
         settings.setObjectName("settings")
-        settings.resize(310, 405)
+        settings.resize(310, 428)
         self.verticalLayout = QtWidgets.QVBoxLayout(settings)
         self.verticalLayout.setObjectName("verticalLayout")
         self.opacity = QtWidgets.QVBoxLayout()
@@ -179,24 +179,33 @@ class Ui_settings(object):
         self.opacity_container.setStretch(1, 5)
         self.opacity_container.setStretch(2, 1)
         self.verticalLayout_3.addLayout(self.opacity_container)
-        self.switch_container = QtWidgets.QHBoxLayout()
-        self.switch_container.setObjectName("switch_container")
+        self.gridLayout = QtWidgets.QGridLayout()
+        self.gridLayout.setObjectName("gridLayout")
         self.stay_on_top = QtWidgets.QCheckBox(self.app_group)
         self.stay_on_top.setObjectName("stay_on_top")
-        self.switch_container.addWidget(self.stay_on_top)
-        self.delete_extra_key = QtWidgets.QCheckBox(self.app_group)
-        self.delete_extra_key.setObjectName("delete_extra_key")
-        self.switch_container.addWidget(self.delete_extra_key)
+        self.gridLayout.addWidget(self.stay_on_top, 1, 0, 1, 1)
         self.toggle_frame = QtWidgets.QCheckBox(self.app_group)
         self.toggle_frame.setObjectName("toggle_frame")
-        self.switch_container.addWidget(self.toggle_frame)
-        self.verticalLayout_3.addLayout(self.switch_container)
+        self.gridLayout.addWidget(self.toggle_frame, 1, 2, 1, 1)
+        self.delete_extra_key = QtWidgets.QCheckBox(self.app_group)
+        self.delete_extra_key.setObjectName("delete_extra_key")
+        self.gridLayout.addWidget(self.delete_extra_key, 0, 0, 1, 1)
+        self.lock_location_button = QtWidgets.QPushButton(self.app_group)
+        self.lock_location_button.setObjectName("lock_location_button")
+        self.gridLayout.addWidget(self.lock_location_button, 0, 2, 1, 1)
+        self.verticalLayout_3.addLayout(self.gridLayout)
         self.verticalLayout.addWidget(self.app_group)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.reset_location_button = QtWidgets.QPushButton(settings)
+        self.reset_location_button.setObjectName("reset_location_button")
+        self.horizontalLayout_2.addWidget(self.reset_location_button)
         self.button_box = QtWidgets.QDialogButtonBox(settings)
         self.button_box.setOrientation(QtCore.Qt.Horizontal)
         self.button_box.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.button_box.setObjectName("button_box")
-        self.verticalLayout.addWidget(self.button_box)
+        self.horizontalLayout_2.addWidget(self.button_box)
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
 
         self.retranslateUi(settings)
         self.button_box.accepted.connect(settings.accept) # type: ignore
@@ -233,15 +242,7 @@ class Ui_settings(object):
         self.opacity_text.setText(_translate("settings", "Opacity"))
         self.opacity_value.setText(_translate("settings", "95"))
         self.stay_on_top.setText(_translate("settings", "Always stay on top"))
-        self.delete_extra_key.setText(_translate("settings", "Delete extra key when paste"))
         self.toggle_frame.setText(_translate("settings", "Toggle frame"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    settings = QtWidgets.QDialog()
-    ui = Ui_settings()
-    ui.setupUi(settings)
-    settings.show()
-    sys.exit(app.exec_())
+        self.delete_extra_key.setText(_translate("settings", "Delete extra key when paste"))
+        self.lock_location_button.setText(_translate("settings", "PushButton"))
+        self.reset_location_button.setText(_translate("settings", "Set to saved location"))

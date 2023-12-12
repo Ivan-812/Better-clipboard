@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>310</width>
-    <height>405</height>
+    <height>428</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -308,25 +308,32 @@
        </layout>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="switch_container" stretch="0,0,0">
-        <item>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="1" column="0">
          <widget class="QCheckBox" name="stay_on_top">
           <property name="text">
            <string>Always stay on top</string>
           </property>
          </widget>
         </item>
-        <item>
+        <item row="1" column="2">
+         <widget class="QCheckBox" name="toggle_frame">
+          <property name="text">
+           <string>Toggle frame</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
          <widget class="QCheckBox" name="delete_extra_key">
           <property name="text">
            <string>Delete extra key when paste</string>
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QCheckBox" name="toggle_frame">
+        <item row="0" column="2">
+         <widget class="QPushButton" name="lock_location_button">
           <property name="text">
-           <string>Toggle frame</string>
+           <string>PushButton</string>
           </property>
          </widget>
         </item>
@@ -336,14 +343,25 @@
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="button_box">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="reset_location_button">
+       <property name="text">
+        <string>Set to saved location</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="button_box">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

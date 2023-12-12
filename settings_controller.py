@@ -15,12 +15,14 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
     # 4. accept
 
     setting_updated = QtCore.pyqtSignal()
+    set_window_location = QtCore.pyqtSignal()
 
     def __init__(self, *args, **kwargs):
         # super().__init__(parent)
         # uic.loadUi("settings.ui", self)  # Load the settings form
 
         super(SettingsDialog, self).__init__(*args, **kwargs)
+        self.settings = QtCore.QSettings("Company", "App")
         self.setupUi(self)
 
         # open config
@@ -28,6 +30,10 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
         self.read_config_file()
 
         self.init_hotkey()
+
+        # TODO: Set Window button
+        self.lock_location_button.clicked.connect(lambda: self.set_window_event('lock'))
+        self.reset_location_button.clicked.connect(lambda: self.set_window_event('reset'))
 
         # Set slider
         self.opacity_value.setValidator(QtGui.QIntValidator(1, 100))
@@ -76,6 +82,16 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
         if text:
             self.opacity_slider.setValue(int(text))
 
+    # Window location
+    def set_window_event(self, mode):
+        if mode == 'lock':
+            if self.lock_location_button.text() == 'Unlocked':
+                self.lock_location_button.setText('Locked')
+            else:
+                self.lock_location_button.setText('Unlocked')
+        elif mode == 'reset':
+            self.set_window_location.emit()
+
     # Config
     def read_config_file(self, filename='config/settings.ini'):
         if os.path.exists(filename):
@@ -123,6 +139,8 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
         self.stay_on_top.setChecked(bool(self.config['APP_SETTINGS']['stay_on_top'] == 'True'))
         self.delete_extra_key.setChecked(bool(self.config['APP_SETTINGS']['delete_extra_key'] == 'True'))
         self.toggle_frame.setChecked(bool(self.config['APP_SETTINGS']['toggle_frame'] == 'True'))
+        lock_text = 'Locked' if self.settings.value('locked_window_location') == 'true' else 'Unlocked'
+        self.lock_location_button.setText(lock_text)
 
         if self.config['APP_SETTINGS']['stay_on_top'] == 'True':
             self.setWindowFlags(self.windowFlags() | QtCore.Qt.WindowStaysOnTopHint)
@@ -139,6 +157,8 @@ class SettingsDialog(QtWidgets.QDialog, Ui_settings):
         self.config['APP_SETTINGS']['stay_on_top'] = str(self.stay_on_top.isChecked())
         self.config['APP_SETTINGS']['delete_extra_key'] = str(self.delete_extra_key.isChecked())
         self.config['APP_SETTINGS']['toggle_frame'] = str(self.toggle_frame.isChecked())
+        value = 'true' if self.lock_location_button.text() == 'Locked' else 'false'
+        self.settings.setValue('locked_window_location', value)
 
         for i in range(10):
             key_seq = getattr(self, f'key_seq_{i}')

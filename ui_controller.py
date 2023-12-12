@@ -53,6 +53,8 @@ class UiController(QtWidgets.QTabWidget, QObject):
         self.ui.settings_button.clicked.connect(self.open_settings)
         self.on_settings_updated()
 
+        self.settings_dialog.set_window_location.connect(lambda: self.restoreGeometry(self.settings.value("geometry", "")))
+
         # Combo box (choose clipboard set)
         combo = self.ui.clipboard_set_combo
         recent = self.clipboard_manager.get_recent_clipboard()
@@ -184,6 +186,9 @@ class UiController(QtWidgets.QTabWidget, QObject):
                 text_edit = getattr(self.ui, f'entry_textEdit_{i}')
                 text_edit.setEnabled(False)
 
+    def save_window_geometry(self):
+        self.settings.setValue("geometry", self.saveGeometry())
+
     @pyqtSlot(str, int)
     def on_hotkey_signal(self, function, i):
         if function == 'on_copy':
@@ -193,7 +198,8 @@ class UiController(QtWidgets.QTabWidget, QObject):
             self.clipboard_manager.paste_index(i, self.delete_extra_key)
 
     def closeEvent(self, event):
-        self.settings.setValue("geometry", self.saveGeometry())
+        if not self.settings.value('locked_window_location') == 'true':
+            self.save_window_geometry()
         # self.settings.setValue("windowState", self.saveState())
         super().closeEvent(event)
 
